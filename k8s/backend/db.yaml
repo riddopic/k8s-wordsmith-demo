@@ -12,24 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Deployment
-apiVersion: extensions/v1beta1
+kind: Service
+apiVersion: v1
 metadata:
-  name: wordsmith-demo-words
+  name: wordsmith-db
 spec:
-  replicas: 5
-  template:
-    metadata:
-      name: words
-      labels:
-        app: wordsmith
-        role: words
-        env: default
-    spec:
-      containers:
-      - name: words
-        image: dockersamples/k8s-wordsmith-api
-        imagePullPolicy: Always
-        ports:
-        - name: words
-          containerPort: 8080
+  type: LoadBalancer
+  ports:
+  - name: postgres
+    port: 5432
+    targetPort: 5432
+    protocol: TCP
+  selector:
+    app: wordsmith
+    role: db

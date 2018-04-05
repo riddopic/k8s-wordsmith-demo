@@ -15,21 +15,21 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: wordsmith-demo-web
+  name: wordsmith-demo-words
 spec:
-  replicas: 5
+  replicas: 1
   template:
     metadata:
-      name: web
+      name: words
       labels:
         app: wordsmith
-        role: web
+        role: words
         env: default
     spec:
       containers:
-      - name: web
-        image: dockersamples/k8s-wordsmith-web
+      - name: words
+        image: stefanoh/k8s-wordsmith-api
         imagePullPolicy: Always
         ports:
-        - name: web
-          containerPort: 80
+        - name: words
+          containerPort: 8080
